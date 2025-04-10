@@ -32,6 +32,8 @@ INSTALLED_APPS = [
 ]
 # Third-party apps
 INSTALLED_APPS += ["rest_framework"]
+# Local apps
+INSTALLED_APPS += ["user", "habit"]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
