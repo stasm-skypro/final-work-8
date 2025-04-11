@@ -70,9 +70,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS: list[str] = (
-        []
-    )  # поля, требуемые при создании суперпользователя (кроме email и пароля) - нам никаких не нужно
+    REQUIRED_FIELDS: list[str] = []  # поля, требуемые при создании суперпользователя (кроме email и пароля)
+    # нам никаких не нужно
 
     def __str__(self):
         """
