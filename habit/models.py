@@ -105,6 +105,13 @@ class PleasantHabit(models.Model):
     # Дата создания полезной привычки
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создана")
 
+    def __str__(self) -> str:
+        """
+        Возвращает строковое представление приятной привычки
+        :return: Строковое представление приятной привычки
+        """
+        return f"{self.action} - ({self.user})"
+
     class Meta:
         verbose_name = "Приятная привычка"
         verbose_name_plural = "Приятные привычки"
