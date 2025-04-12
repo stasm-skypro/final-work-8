@@ -1,14 +1,28 @@
 from rest_framework.exceptions import ValidationError
 
+# def validate_reward_or_related(data):
+#     """
+#     Исключает одновременное указание вознаграждения и связанной привычки.
+#     """
+#     if data.get("reward") and data.get("related_habit"):
+#         raise ValidationError("Нельзя одновременно указывать вознаграждение и связанную привычку.")
 
-def validate_reward_or_related(data):
+
+class ValidateRewardOrRelated:
     """
     Исключает одновременное указание вознаграждения и связанной привычки.
-    :param data:
-    :return:
     """
-    if data.get("reward") and data.get("related_habit"):
-        raise ValidationError("Нельзя одновременно указывать вознаграждение и связанную привычку.")
+
+    def __init__(self, field):
+        """
+        :param field:
+        """
+        self.field = field
+
+    def __call__(self, value):
+
+        if value.get("reward") and value.get("related_habit"):
+            raise ValidationError("Нельзя одновременно указывать вознаграждение и связанную привычку.")
 
 
 def validate_time_to_complete(value):
