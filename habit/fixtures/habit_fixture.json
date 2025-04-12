@@ -144,7 +144,7 @@
       "time": "23:00:00",
       "action": "Лечь спать вовремя",
       "is_pleasant": false,
-      "related_habit": 8,
+      "related_habit": 9,
       "periodicity": 1,
       "reward": "",
       "duration": "00:01:00",
