@@ -3,8 +3,7 @@ Django settings for config project.
 """
 
 import os
-
-# from datetime import timedelta
+from datetime import timedelta
 from pathlib import Path
 
 import dotenv
@@ -115,4 +114,12 @@ REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": (  # Настройка прав доступа для всех контроллеров
         "rest_framework.permissions.IsAuthenticated",
     ),
+}
+
+
+# Настройка Simple JWT
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=30),  # Настройка времени жизни токена доступа
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Настройка времени жизни токена обновления
+    "AUTH_HEADER_TYPES": ("Bearer",),  # Настройка типа заголовка для токена
 }
