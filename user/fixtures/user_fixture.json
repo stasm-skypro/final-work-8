@@ -3,28 +3,28 @@
     "model": "user.user",
     "pk": 1,
     "fields": {
-      "email": "admin@example.com",
+      "email": "johny.walker@example.com",
       "first_name": "Johny",
       "last_name": "Walker",
       "is_active": true,
       "is_staff": false,
       "is_superuser": false,
       "date_joined": "2024-01-01T10:00:00Z",
-      "password": "pbkdf2_sha256$260000$hashed_admin_password"
+      "password": "johny-walker-1234"
     }
   },
   {
     "model": "user.user",
     "pk": 2,
     "fields": {
-      "email": "user@example.com",
+      "email": "jack.daniels@example.com",
       "first_name": "Jack",
       "last_name": "Daniels",
       "is_active": true,
       "is_staff": false,
       "is_superuser": false,
       "date_joined": "2024-02-01T12:00:00Z",
-      "password": "pbkdf2_sha256$260000$hashed_user_password"
+      "password": "jack-daniels-1234"
     }
   }
 ]

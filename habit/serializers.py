@@ -20,7 +20,7 @@ from .validators import (
 )
 
 
-class HabitSerializer(serializers.ModelSerializer):
+class CreateHabitSerializer(serializers.ModelSerializer):
     """
     Проверяет валидность привычки согласно бизнес-правилам.
     """
@@ -41,3 +41,13 @@ class HabitSerializer(serializers.ModelSerializer):
             RewardOrRelatedValidator(),
             PleasantRestrictionsValidator(),
         ]
+
+
+class HabitSerializer(serializers.ModelSerializer):
+    """
+    Подготавливает список привычек.
+    """
+
+    class Meta:
+        model = Habit
+        fields = "__all__"
