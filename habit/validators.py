@@ -1,57 +1,95 @@
+"""
+Модуль валидаторов модели Habit.
+RewardOrRelatedValidator - Исключает одновременный выбор связанной привычки и указания вознаграждения.
+В модели не должно быть заполнено одновременно и поле вознаграждения, и поле связанной привычки. Можно заполнить
+только одно из двух полей.
+MaxDurationValidator - Исключает выполнение привычки более 120 секунд.
+RelatedHabitValidator - Проверяет, что в связанные привычки могут попадать только привычки с признаком приятной
+привычки.
+PleasantRestrictionsValidator - Проверяет, что у приятной привычки не может быть вознаграждения или связанной привычки.
+FrequencyValidator - Проверяет периодичность выполнения привычки. Нельзя выполнять привычку реже, чем 1 раз в 7 дней.
+Нельзя не выполнять привычку более 7 дней. Например, привычка может повторяться раз в неделю, но не раз в 2 недели.
+За одну неделю необходимо выполнить привычку хотя бы один раз.
+"""
+
 from rest_framework.exceptions import ValidationError
 
-# def validate_reward_or_related(data):
-#     """
-#     Исключает одновременное указание вознаграждения и связанной привычки.
-#     """
-#     if data.get("reward") and data.get("related_habit"):
-#         raise ValidationError("Нельзя одновременно указывать вознаграждение и связанную привычку.")
 
-
-class ValidateRewardOrRelated:
+class RewardOrRelatedValidator:
     """
     Исключает одновременное указание вознаграждения и связанной привычки.
     """
 
-    def __init__(self, field):
+    def __call__(self, attrs):
         """
-        :param field:
+        Проверяет одновременное указание вознаграждения и связанной привычки
+        :param attrs (OrderedDict | dict): Данные модели Привычка
+        :return:
         """
-        self.field = field
-
-    def __call__(self, value):
-
-        if value.get("reward") and value.get("related_habit"):
+        if attrs.get("reward") and attrs.get("related_habit"):
             raise ValidationError("Нельзя одновременно указывать вознаграждение и связанную привычку.")
 
 
-def validate_time_to_complete(value):
+class MaxDurationValidator:
     """
     Исключает выполнение привычки более 120 секунд.
     """
-    if value > 120:
-        raise ValidationError("Время выполнения не может превышать 120 секунд.")
+
+    def __call__(self, value):
+        """
+        Проверяет время выполнения привычки
+        :param value: Передаваемое значение времени выполнения в секундах
+        :return:
+        """
+        if value.total_seconds() > 120:
+            raise ValidationError("Время выполнения не может превышать 120 секунд.")
 
 
-def validate_related_habit(value):
+class RelatedHabitValidator:
     """
     Проверяет, что в связанные привычки могут попадать только привычки с признаком приятной привычки.
     """
-    if value and not value.is_pleasant:
-        raise ValidationError("Связанная привычка должна быть с признаком приятной привычки.")
+
+    def __call__(self, instance):
+        """
+        Проверяет связанную привычку - в связанные привычки могут попадать только привычки с признаком приятной
+        привычки.
+        :param instance: Объект связанной привычки (PleasantHabit)
+        :return:
+        """
+        if instance and not instance.is_pleasant:
+            raise ValidationError("Связанная привычка должна быть с признаком приятной привычки.")
 
 
-def validate_pleasant_restrictions(value):
+class PleasantRestrictionsValidator:
     """
     Исключает появление у приятной привычки вознаграждение или связанной привычки.
     """
-    if value.is_pleasant and (value.reward or value.related_habit):
-        raise ValidationError("У приятной привычки не должно быть ни вознаграждения, ни связанной привычки.")
+
+    def __call__(self, attrs):
+        """
+        Проверяет приятную привычку - у приятной привычки не может быть вознаграждения или связанной привычки.
+        :param attrs (OrderedDict | dict): Данные модели Привычка
+        :return:
+        """
+        is_pleasant = attrs.get("is_pleasant")
+        reward = attrs.get("reward")
+        related_habit = attrs.get("related_habit")
+
+        if is_pleasant and (reward or related_habit):
+            raise ValidationError("У приятной привычки не должно быть ни вознаграждения, ни связанной привычки.")
 
 
-def validate_frequency(value):
+class FrequencyValidator:
     """
     Проверяет периодичность выполнения привычки. Нельзя выполнять привычку реже, чем 1 раз в 7 дней.
     """
-    if value > 7:
-        raise ValidationError("Периодичность не может быть больше 7 дней.")
+
+    def __call__(self, value):
+        """
+        Проверяет периодичность выполнения привычки
+        :param value: Количество дней между выполнениями привычки
+        :return:
+        """
+        if value > 7:
+            raise ValidationError("Нельзя выполнять привычку реже, чем 1 раз в 7 дней.")

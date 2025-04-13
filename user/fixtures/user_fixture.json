@@ -4,8 +4,8 @@
     "pk": 1,
     "fields": {
       "email": "admin@example.com",
-      "first_name": "Admin",
-      "last_name": "User",
+      "first_name": "Johny",
+      "last_name": "Walker",
       "is_active": true,
       "is_staff": false,
       "is_superuser": false,
@@ -18,8 +18,8 @@
     "pk": 2,
     "fields": {
       "email": "user@example.com",
-      "first_name": "Regular",
-      "last_name": "User",
+      "first_name": "Jack",
+      "last_name": "Daniels",
       "is_active": true,
       "is_staff": false,
       "is_superuser": false,
