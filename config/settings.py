@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 # Third-party apps
-INSTALLED_APPS += ["rest_framework"]
+INSTALLED_APPS += ["rest_framework", "rest_framework_simplejwt"]
 # Local apps
 INSTALLED_APPS += ["user", "habit"]
 

@@ -59,7 +59,7 @@ class User(AbstractBaseUser, PermissionsMixin):
         date_joined (datetime): Дата и время регистрации
     """
 
-    email = models.EmailField(unique=True, verbose_name="Электронная почта")
+    email = models.EmailField(unique=True, verbose_name="Email")
     first_name = models.CharField(max_length=30, blank=True, verbose_name="Имя")
     last_name = models.CharField(max_length=30, blank=True, verbose_name="Фамилия")
     is_active = models.BooleanField(default=True, verbose_name="Активен")
