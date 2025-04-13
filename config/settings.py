@@ -3,6 +3,8 @@ Django settings for config project.
 """
 
 import os
+
+# from datetime import timedelta
 from pathlib import Path
 
 import dotenv
@@ -103,3 +105,14 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Custom user model
 AUTH_USER_MODEL = "user.User"
+
+
+# Настройка DjangoFilterBackend
+REST_FRAMEWORK = {
+    "DEFAULT_AUTHENTICATION_CLASSES": [  # Настройка аутентификации
+        "rest_framework_simplejwt.authentication.JWTAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": (  # Настройка прав доступа для всех контроллеров
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+}
