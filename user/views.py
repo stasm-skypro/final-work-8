@@ -40,7 +40,7 @@ class RegisterAPIView(APIView):
 
 class LoginAPIView(APIView):
     """
-    Авторизация пользователя.
+    Аутентификация (авторизация) пользователя.
 
     Параметры запроса:
     - email (str): Email пользователя
@@ -52,6 +52,12 @@ class LoginAPIView(APIView):
     """
 
     def post(self, request):
+        """
+        Обрабатывает запрос на аутентификацию пользователя.
+        :param request: Объект запроса, содержащий данные пользователя.
+                    Тип: rest_framework.request.Request
+        :return: Response с результатом аутентификации.
+        """
         email = request.data.get("email")
         password = request.data.get("password")
 
