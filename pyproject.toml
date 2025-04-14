@@ -15,7 +15,8 @@ dependencies = [
     "psycopg2-binary (>=2.9.10,<3.0.0)",
     "djangorestframework-simplejwt (>=5.5.0,<6.0.0)",
     "ipython (>=9.1.0,<10.0.0)",
-    "celery (>=5.5.1,<6.0.0)"
+    "celery (>=5.5.1,<6.0.0)",
+    "redis (>=5.2.1,<6.0.0)"
 ]
 
 [tool.poetry]
