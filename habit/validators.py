@@ -63,7 +63,7 @@ class RelatedHabitValidator:
 
 class PleasantRestrictionsValidator:
     """
-    Исключает появление у приятной привычки вознаграждение или связанной привычки.
+    Исключает появление у приятной привычки вознаграждения или связанной привычки.
     """
 
     def __call__(self, attrs):

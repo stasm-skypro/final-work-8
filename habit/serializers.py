@@ -25,29 +25,25 @@ class HabitSerializer(serializers.ModelSerializer):
     Проверяет валидность привычки согласно бизнес-правилам.
     """
 
+    # Исключает выполнение привычки более 120 секунд
     duration = serializers.DurationField(validators=[MaxDurationValidator()], required=True)
+
+    # Проверяет, что в связанные привычки могут попадать только привычки с признаком приятной привычки
     related_habit = serializers.PrimaryKeyRelatedField(
         queryset=PleasantHabit.objects.all(),
         required=False,
         allow_null=True,
         validators=[RelatedHabitValidator()],
     )
+
+    # Проверяет периодичность выполнения привычки. Нельзя выполнять привычку реже, чем 1 раз в 7 дней
     periodicity = serializers.IntegerField(validators=[FrequencyValidator()])
 
     class Meta:
         model = Habit
         fields = "__all__"
         validators = [
-            RewardOrRelatedValidator(),
-            PleasantRestrictionsValidator(),
+            RewardOrRelatedValidator(),  # Исключает одновременное указание вознаграждения и связанной привычки
+            PleasantRestrictionsValidator(),  # Исключает появление у приятной привычки вознаграждения
+            # или связанной привычки
         ]
-
-
-# class HabitSerializer(serializers.ModelSerializer):
-#     """
-#     Подготавливает список привычек.
-#     """
-#
-#     class Meta:
-#         model = Habit
-#         fields = "__all__"

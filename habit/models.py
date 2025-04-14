@@ -37,7 +37,7 @@ class Habit(models.Model):
     action = models.CharField(max_length=255, verbose_name="Действие")
 
     # Признак приятной привычки — привычка, которую можно привязать к выполнению полезной привычки
-    is_pleasant = models.BooleanField(default=False, verbose_name="Приятная привычка")
+    is_pleasant = models.BooleanField(default=False, editable=False, verbose_name="Приятная привычка")
 
     # Связанная привычка — привычка, которая связана с другой привычкой, важно указывать для полезных привычек, но не
     # для приятных
@@ -97,7 +97,7 @@ class PleasantHabit(models.Model):
     )
 
     # Признак приятной привычки — привычка, которую можно привязать к выполнению полезной привычки
-    is_pleasant = models.BooleanField(default=True, verbose_name="Приятная привычка")
+    is_pleasant = models.BooleanField(default=True, editable=False, verbose_name="Приятная привычка")
 
     # Место — место, в котором необходимо выполнять привычку
     place = models.CharField(max_length=255, verbose_name="Место")
