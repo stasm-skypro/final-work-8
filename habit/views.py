@@ -1,5 +1,7 @@
 # from rest_framework.pagination import PageNumberPagination
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 # from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
@@ -55,3 +57,19 @@ class HabitViewSet(ModelViewSet):
         Автоматически устанавливает пользователя при создании привычки.
         """
         serializer.save(user=self.request.user)
+
+    @action(detail=False, methods=["get"], permission_classes=[IsAuthenticated])
+    def public(self, request):
+        """
+        Возвращает список публичных привычек.
+
+        Эндпойнт:
+        GET /habits/public/
+        """
+        habits = Habit.objects.filter(is_public=True).order_by("created_at")
+        page = self.paginate_queryset(habits)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+        serializer = self.get_serializer(habits, many=True)
+        return Response(serializer.data)
