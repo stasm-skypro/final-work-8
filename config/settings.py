@@ -125,3 +125,7 @@ SIMPLE_JWT = {
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),  # Настройка времени жизни токена обновления
     "AUTH_HEADER_TYPES": ("Bearer",),  # Настройка типа заголовка для токена
 }
+
+
+# Telegram Integration
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
