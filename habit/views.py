@@ -1,40 +1,25 @@
-# from rest_framework.pagination import PageNumberPagination
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-
-# from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Habit
 from .serializers import HabitSerializer
 
-# TODO: Переписать через ViewSet
-# class UserHabitListAPIView(APIView):
-#     """
-#     Возвращает список привычек текущего пользователя с пагинацией.
-#     """
-#
-#     permission_classes = [IsAuthenticated]
-#
-#     def get(self, request):
-#         """
-#         Обрабатывает GET-запрос и возвращает список привычек текущего пользователя с пагинацией.
-#         :param request: rest_framework.request.Request
-#         :return: Response
-#         """
-#         habits = Habit.objects.filter(user=request.user).order_by("created_at")
-#         paginator = PageNumberPagination()
-#         paginated_queryset = paginator.paginate_queryset(habits, request)
-#         serializer = HabitSerializer(paginated_queryset, many=True)
-#         return paginator.get_paginated_response(serializer.data)
+# Так как нужно реализовать полный набор CRUD-действий (создание, список, редактирование, удаление, просмотр) —
+# лучше использовать ModelViewSet.
+# Он:
+# уже реализует все основные методы (list, create, retrieve, update, partial_update, destroy);
+# легко настраивается через queryset, serializer_class и permission_classes;
+# поддерживает пагинацию, фильтрацию и сортировку «из коробки»;
+# позволяет использовать router для удобной маршрутизации.
 
 
 class HabitViewSet(ModelViewSet):
     """
     CRUD для привычек текущего пользователя.
 
-    Эндпойнты:
+    Эндпоинты:
     GET /habits/ — список привычек текущего пользователя (с пагинацией),
     POST /habits/ — создание,
     GET /habits/{id}/ — просмотр,
@@ -63,7 +48,10 @@ class HabitViewSet(ModelViewSet):
         """
         Возвращает список публичных привычек.
 
-        Эндпойнт:
+        @action позволяет добавлять дополнительные эндпоинты к ViewSet'у, которые не входят в стандартные CRUD, он
+        автоматически даст новый маршрут используя DefaultRouter.
+
+        Эндпоинт:
         GET /habits/public/
         """
         habits = Habit.objects.filter(is_public=True).order_by("created_at")

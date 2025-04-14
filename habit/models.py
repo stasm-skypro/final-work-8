@@ -96,6 +96,9 @@ class PleasantHabit(models.Model):
         verbose_name="Пользователь",
     )
 
+    # Признак приятной привычки — привычка, которую можно привязать к выполнению полезной привычки
+    is_pleasant = models.BooleanField(default=True, verbose_name="Приятная привычка")
+
     # Место — место, в котором необходимо выполнять привычку
     place = models.CharField(max_length=255, verbose_name="Место")
 
