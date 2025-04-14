@@ -130,6 +130,7 @@ SIMPLE_JWT = {
 # Telegram Integration
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
 
+
 # Настройка Celery
 # Очередь брокера и хранилище результатов
 CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
@@ -143,4 +144,5 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_TASK_TRACK_STARTED = True
 # Ограничение по времени выполнения задачи (в секундах)
 CELERY_TASK_TIME_LIMIT = 15 * 60  # 15 минут
+# Планировщик задач для Celery
 CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
