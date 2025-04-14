@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 # Third-party apps
-INSTALLED_APPS += ["rest_framework", "rest_framework_simplejwt"]
+INSTALLED_APPS += ["rest_framework", "rest_framework_simplejwt", "django_celery_beat"]
 # Local apps
 INSTALLED_APPS += ["user", "habit"]
 
@@ -143,3 +143,4 @@ CELERY_TASK_SERIALIZER = "json"
 CELERY_TASK_TRACK_STARTED = True
 # Ограничение по времени выполнения задачи (в секундах)
 CELERY_TASK_TIME_LIMIT = 15 * 60  # 15 минут
+CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
