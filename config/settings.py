@@ -129,3 +129,17 @@ SIMPLE_JWT = {
 
 # Telegram Integration
 TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN")
+
+# Настройка Celery
+# Очередь брокера и хранилище результатов
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND")
+# Используется та же временная зона, что и в Django
+CELERY_TIMEZONE = TIME_ZONE
+# Сериализация и обмен данными
+CELERY_ACCEPT_CONTENT = ["json"]
+CELERY_TASK_SERIALIZER = "json"
+# Отображение прогресса задач в логах
+CELERY_TASK_TRACK_STARTED = True
+# Ограничение по времени выполнения задачи (в секундах)
+CELERY_TASK_TIME_LIMIT = 15 * 60  # 15 минут
