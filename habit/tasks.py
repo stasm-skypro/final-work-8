@@ -18,7 +18,7 @@ if TYPE_CHECKING:  # безопасный импорт User только для 
 def send_telegram_message(chat_id: int, text: str) -> None:
     """
     Отправляет сообщение в телеграм пользователя.
-    :param chat_id: id чата пользователя
+    :param chat_id: id пользователя в телеграм-чате
     :param text: Отправляемое сообщение
     :return:
     """
@@ -44,4 +44,12 @@ def send_habit_reminders() -> None:
         user: User = habit.user  # Явная аннотация помогает mypy - чтобы telegram_chat_id не вызывал ошибок
         if user.telegram_chat_id:
             message = f"Напоминание: через 15 минут необходимо выполнить привычку: {habit.action}"
-            send_telegram_message(user.telegram_chat_id, message)
+            try:
+                send_telegram_message(user.telegram_chat_id, message)
+            except Exception as e:
+                print(f"Ошибка при отправке сообщения в Telegram: {e}")
+
+
+@shared_task
+def test_task():
+    print("Задача работает!")

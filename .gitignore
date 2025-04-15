@@ -172,7 +172,3 @@ db.*
 # Mac OS special folder
 .DS_Store/
 .DS_Store
-
-# Others
-roadmap.txt
-rd.txt
