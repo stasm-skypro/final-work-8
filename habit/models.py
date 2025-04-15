@@ -72,6 +72,9 @@ class Habit(models.Model):
     # Дата создания полезной привычки
     created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создана")  # type: ignore[var-annotated]
 
+    id: int  # Для mypy
+
+    # Возвращает строковое представление привычки
     def __str__(self) -> str:
         """
         Возвращает строковое представление привычки
