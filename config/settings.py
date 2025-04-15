@@ -33,7 +33,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
 ]
 # Third-party apps
-INSTALLED_APPS += ["rest_framework", "rest_framework_simplejwt", "django_celery_beat"]
+INSTALLED_APPS += ["rest_framework", "rest_framework_simplejwt", "django_celery_beat", "corsheaders"]
 # Local apps
 INSTALLED_APPS += ["user", "habit"]
 
@@ -46,6 +46,9 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+# Third-party middleware
+MIDDLEWARE += ["corsheaders.middleware.CorsMiddleware"]
+
 
 ROOT_URLCONF = "config.urls"
 
@@ -153,3 +156,18 @@ CELERY_BEAT_SCHEDULER = {
         "args": [],
     },
 }
+
+
+# Настройка CORS - домены, которым разрешён доступ
+CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
+
+# Нужное раскомментировать
+# На случай авторизации по кукам
+# CORS_ALLOW_CREDENTIALS = True
+# Допустимые заголовки и методы
+# CORS_ALLOW_HEADERS = [
+#     'content-type',
+#     'authorization',
+#     ...
+# ]
