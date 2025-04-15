@@ -59,19 +59,26 @@ class User(AbstractBaseUser, PermissionsMixin):
         date_joined (datetime): Дата и время регистрации
     """
 
-    email = models.EmailField(unique=True, verbose_name="Email")
-    first_name = models.CharField(max_length=30, blank=True, verbose_name="Имя")
-    last_name = models.CharField(max_length=30, blank=True, verbose_name="Фамилия")
-    is_active = models.BooleanField(default=True, verbose_name="Активен")
-    is_staff = models.BooleanField(default=False, verbose_name="Сотрудник")
-    is_superuser = models.BooleanField(default=False, verbose_name="Суперпользователь")
-    date_joined = models.DateTimeField(auto_now_add=True, verbose_name="Дата регистрации")
+    email = models.EmailField(unique=True, verbose_name="Email")  # type: ignore[var-annotated]
+    first_name = models.CharField(max_length=30, blank=True, verbose_name="Имя")  # type: ignore[var-annotated]
+    last_name = models.CharField(max_length=30, blank=True, verbose_name="Фамилия")  # type: ignore[var-annotated]
+    is_active = models.BooleanField(default=True, verbose_name="Активен")  # type: ignore[var-annotated]
+    is_staff = models.BooleanField(default=False, verbose_name="Сотрудник")  # type: ignore[var-annotated]
+    is_superuser = models.BooleanField(default=False, verbose_name="Суперпользователь")  # type: ignore[var-annotated]
+    date_joined = models.DateTimeField(
+        auto_now_add=True, verbose_name="Дата регистрации"
+    )  # type: ignore[var-annotated]
+    telegram_chat_id = models.CharField(
+        max_length=50, blank=True, null=True, verbose_name="Telegram chat ID"
+    )  # type: ignore[var-annotated]
 
     objects = UserManager()
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS: list[str] = []  # поля, требуемые при создании суперпользователя (кроме email и пароля)
-    # нам никаких не нужно
+    REQUIRED_FIELDS = [
+        "first_name",
+        "last_name",
+    ]  # поля, требуемые при создании пользователя (кроме email и пароля)
 
     def __str__(self):
         """

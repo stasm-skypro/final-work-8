@@ -7,6 +7,7 @@ from datetime import timedelta
 from pathlib import Path
 
 import dotenv
+from celery.schedules import crontab
 
 dotenv.load_dotenv()
 
@@ -143,6 +144,12 @@ CELERY_TASK_SERIALIZER = "json"
 # Отображение прогресса задач в логах
 CELERY_TASK_TRACK_STARTED = True
 # Ограничение по времени выполнения задачи (в секундах)
-CELERY_TASK_TIME_LIMIT = 15 * 60  # 15 минут
+CELERY_TASK_TIME_LIMIT = 30 * 60  # 30 минут
 # Планировщик задач для Celery
-CELERY_BEAT_SCHEDULER = "django_celery_beat.schedulers.DatabaseScheduler"
+CELERY_BEAT_SCHEDULER = {
+    "send-habit-reminders-every-minute": {
+        "task": "your_app.tasks.send_habit_reminders",
+        "schedule": crontab(),  # каждую минуту
+        "args": [],
+    },
+}

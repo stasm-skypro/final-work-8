@@ -31,6 +31,9 @@ repos:
     hooks:
       - id: mypy
         exclude: 'migrations/'
+        additional_dependencies:
+          - types-requests
+          - django-stubs
 
   - repo: https://github.com/asottile/pyupgrade
     rev: v3.15.0

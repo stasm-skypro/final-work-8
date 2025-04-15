@@ -17,7 +17,11 @@ dependencies = [
     "ipython (>=9.1.0,<10.0.0)",
     "celery (>=5.5.1,<6.0.0)",
     "redis (>=5.2.1,<6.0.0)",
-    "django-celery-beat @ git+https://github.com/celery/django-celery-beat.git@main"
+    "django-celery-beat @ git+https://github.com/celery/django-celery-beat.git@main",
+    "requests (>=2.32.3,<3.0.0)",
+    "types-requests (>=2.32.0.20250328,<3.0.0.0)",
+    "django-stubs (>=5.1.3,<6.0.0)",
+    "mypy (>=1.15.0,<2.0.0)"
 ]
 
 [tool.poetry]
@@ -72,12 +76,11 @@ max-complexity = 10
 
 [tool.mypy]
 exclude = 'venv'
-# Игнорировать отсутствующие типы у сторонних библиотек
 ignore_missing_imports = true
-# Поддержка strict режима, но без фанатизма
 disallow_untyped_defs = false
 check_untyped_defs = true
 show_error_codes = true
 follow_imports = "silent"
-# Указать путь к settings, чтобы plugin понимал проект
+
+[tool.django-stubs]
 django_settings_module = "config.settings"

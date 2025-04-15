@@ -25,19 +25,21 @@ class Habit(models.Model):
         related_name="habits",
         verbose_name="Пользователь",  # определяет имя обратной связи — то, как обращаться к связанным объектам с
         # другой стороны связи
-    )
+    )  # type: ignore[var-annotated]
 
     # Место — место, в котором необходимо выполнять привычку
-    place = models.CharField(max_length=255, verbose_name="Место")
+    place = models.CharField(max_length=255, verbose_name="Место")  # type: ignore[var-annotated]
 
     # Время — время, когда необходимо выполнять полезную привычку
-    time = models.TimeField(verbose_name="Время")
+    time = models.TimeField(verbose_name="Время")  # type: ignore[var-annotated]
 
     # Действие — действие, которое представляет собой полезная привычка
-    action = models.CharField(max_length=255, verbose_name="Действие")
+    action = models.CharField(max_length=255, verbose_name="Действие")  # type: ignore[var-annotated]
 
     # Признак приятной привычки — привычка, которую можно привязать к выполнению полезной привычки
-    is_pleasant = models.BooleanField(default=False, editable=False, verbose_name="Приятная привычка")
+    is_pleasant = models.BooleanField(
+        default=False, editable=False, verbose_name="Приятная привычка"
+    )  # type: ignore[var-annotated]
 
     # Связанная привычка — привычка, которая связана с другой привычкой, важно указывать для полезных привычек, но не
     # для приятных
@@ -48,23 +50,27 @@ class Habit(models.Model):
         blank=True,
         verbose_name="Связанная привычка",
         help_text="Указывается только для полезных привычек",
-    )
+    )  # type: ignore[var-annotated]
 
     # Периодичность (по умолчанию ежедневная) — периодичность выполнения полезной привычки для напоминания в днях
-    periodicity = models.PositiveSmallIntegerField(default=1, verbose_name="Периодичность (в днях)")
+    periodicity = models.PositiveSmallIntegerField(
+        default=1, verbose_name="Периодичность (в днях)"
+    )  # type: ignore[var-annotated]
 
     # Вознаграждение — чем пользователь должен себя вознаградить после выполнения полезной привычки
-    reward = models.CharField(max_length=255, blank=True, null=True, verbose_name="Вознаграждение")
+    reward = models.CharField(
+        max_length=255, blank=True, null=True, verbose_name="Вознаграждение"
+    )  # type: ignore[var-annotated]
 
     # Время на выполнение — время, которое предположительно потратит пользователь на выполнение полезной привычки
-    duration = models.DurationField(verbose_name="Время на выполнение")
+    duration = models.DurationField(verbose_name="Время на выполнение")  # type: ignore[var-annotated]
 
     # Признак публичности — привычки можно публиковать в общий доступ, чтобы другие пользователи могли брать в пример
     # чужие привычки
-    is_public = models.BooleanField(default=False, verbose_name="Публичная привычка")
+    is_public = models.BooleanField(default=False, verbose_name="Публичная привычка")  # type: ignore[var-annotated]
 
     # Дата создания полезной привычки
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создана")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создана")  # type: ignore[var-annotated]
 
     def __str__(self) -> str:
         """
@@ -89,7 +95,7 @@ class PleasantHabit(models.Model):
     """
 
     # Пользователь — создатель привычки
-    user = models.ForeignKey(
+    user: models.ForeignKey = models.ForeignKey(
         "user.User",
         on_delete=models.CASCADE,
         related_name="pleasant_habits",
@@ -97,16 +103,18 @@ class PleasantHabit(models.Model):
     )
 
     # Признак приятной привычки — привычка, которую можно привязать к выполнению полезной привычки
-    is_pleasant = models.BooleanField(default=True, editable=False, verbose_name="Приятная привычка")
+    is_pleasant: models.BooleanField = models.BooleanField(
+        default=True, editable=False, verbose_name="Приятная привычка"
+    )
 
     # Место — место, в котором необходимо выполнять привычку
-    place = models.CharField(max_length=255, verbose_name="Место")
+    place: models.CharField = models.CharField(max_length=255, verbose_name="Место")
 
     # Действие — действие, которое представляет собой полезная привычка
-    action = models.CharField(max_length=255, verbose_name="Действие")
+    action: models.CharField = models.CharField(max_length=255, verbose_name="Действие")
 
     # Дата создания полезной привычки
-    created_at = models.DateTimeField(auto_now_add=True, verbose_name="Создана")
+    created_at: models.DateTimeField = models.DateTimeField(auto_now_add=True, verbose_name="Создана")
 
     def __str__(self) -> str:
         """
