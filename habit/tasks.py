@@ -16,6 +16,12 @@ if TYPE_CHECKING:  # безопасный импорт User только для 
 
 
 def send_telegram_message(chat_id: int, text: str) -> None:
+    """
+    Отправляет сообщение в телеграм пользователя.
+    :param chat_id: id чата пользователя
+    :param text: Отправляемое сообщение
+    :return:
+    """
     token = settings.TELEGRAM_BOT_TOKEN
     url = f"https://api.telegram.org/bot{token}/sendMessage"
     requests.post(url, data={"chat_id": chat_id, "text": text})
@@ -23,6 +29,10 @@ def send_telegram_message(chat_id: int, text: str) -> None:
 
 @shared_task
 def send_habit_reminders() -> None:
+    """
+    Напоминает пользователям о полезной привычке за 15 минут до начала.
+    :return:
+    """
     now = datetime.now()
     notify_time = now + timedelta(minutes=15)
 
