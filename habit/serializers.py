@@ -23,6 +23,10 @@ from .validators import (
 class HabitSerializer(serializers.ModelSerializer):
     """
     Проверяет валидность привычки согласно бизнес-правилам.
+    Attributes:
+        duration (DurationField): Время выполнения привычки
+        related_habit (PrimaryKeyRelatedField): Связанная привычка
+        periodicity (IntegerField): Периодичность выполнения привычки
     """
 
     # Исключает выполнение привычки более 120 секунд

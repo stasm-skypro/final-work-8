@@ -7,17 +7,17 @@ class UserManager(BaseUserManager):
     Определяет менеджера пользователей. Нужен для правильного создания пользователей и суперпользователей в кастомной
     модели пользователя.
     Attributes:
-        email (str):        Электронная почта пользователя
-        password (str):     Пароль пользователя
+        email (str): Электронная почта пользователя
+        password (str): Пароль пользователя
     """
 
     def create_user(self, email, password=None, **extra_fields):
         """
         Создаёт обычного пользователя.
-        :param email:           Электронная почта пользователя
-        :param password:        Пароль пользователя
-        :param extra_fields:    Дополнительные поля пользователя
-        :return:                Объект пользователя
+        :param email: Электронная почта пользователя
+        :param password: Пароль пользователя
+        :param extra_fields: Дополнительные поля пользователя
+        :return: Объект пользователя
         """
         if not email:
             raise ValueError("Email обязателен")
@@ -30,10 +30,10 @@ class UserManager(BaseUserManager):
     def create_superuser(self, email, password=None, **extra_fields):
         """
         Создаёт суперпользователя.
-        :param email:           Электронная почта суперпользователя
-        :param password:        Пароль суперпользователя
-        :param extra_fields:    Дополнительные поля суперпользователя
-        :return:                Объект суперпользователя
+        :param email: Электронная почта суперпользователя
+        :param password: Пароль суперпользователя
+        :param extra_fields: Дополнительные поля суперпользователя
+        :return: Объект суперпользователя
         """
         extra_fields.setdefault("is_staff", True)
         extra_fields.setdefault("is_superuser", True)
@@ -50,12 +50,12 @@ class User(AbstractBaseUser, PermissionsMixin):
     """
     Определяет модель пользователя.
     Attributes:
-        email (str):            Электронная почта пользователя
-        first_name (str):       Имя пользователя
-        last_name (str):        Фамилия пользователя
-        is_active (bool):       Признак, является ли пользователь активным
-        is_staff (bool):        Признак, является ли пользователь суперпользователем
-        is_superuser (bool):    Признак, является ли пользователь суперпользователем
+        email (str): Электронная почта пользователя
+        first_name (str): Имя пользователя
+        last_name (str): Фамилия пользователя
+        is_active (bool): Признак, является ли пользователь активным
+        is_staff (bool): Признак, является ли пользователь суперпользователем
+        is_superuser (bool): Признак, является ли пользователь суперпользователем
         date_joined (datetime): Дата и время регистрации
     """
 
