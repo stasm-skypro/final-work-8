@@ -119,7 +119,7 @@ REST_FRAMEWORK = {
         "rest_framework.permissions.IsAuthenticated",
     ),
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-    "PAGE_SIZE": 5,  # Настройка пагинации (привычек на странице)
+    # "PAGE_SIZE": 5,  # Настройка пагинации
 }
 
 
@@ -162,10 +162,9 @@ CELERY_BEAT_SCHEDULER = {
 CORS_ALLOWED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
 CSRF_TRUSTED_ORIGINS = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
-# Нужное раскомментировать
-# На случай авторизации по кукам
+# На случай авторизации по кукам - пока не нужно
 # CORS_ALLOW_CREDENTIALS = True
-# Допустимые заголовки и методы
+# Допустимые заголовки и методы - пока не нужно
 # CORS_ALLOW_HEADERS = [
 #     'content-type',
 #     'authorization',

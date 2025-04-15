@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from .models import Habit
+from .paginators import HabitPagination
 from .serializers import HabitSerializer
 
 # Так как нужно реализовать полный набор CRUD-действий (создание, список, редактирование, удаление, просмотр) —
@@ -30,6 +31,7 @@ class HabitViewSet(ModelViewSet):
 
     serializer_class = HabitSerializer
     permission_classes = [IsAuthenticated]
+    pagination_class = HabitPagination
 
     def get_queryset(self):
         """
