@@ -1,4 +1,5 @@
-from __future__ import annotations  # поддержка отложенных аннотаций.
+# поддержка отложенных аннотаций, все типы в аннотациях становятся строками до runtime, нужно для mypy
+from __future__ import annotations
 
 from datetime import datetime, timedelta
 from typing import TYPE_CHECKING, cast
@@ -10,7 +11,7 @@ from celery import shared_task
 
 from habit.models import Habit
 
-if TYPE_CHECKING:  # безопасный импорт User только для mypy, не влияет на runtime
+if TYPE_CHECKING:  # безопасный импорт User только для mypy, чтобы mypy понял откуда user, не влияет на runtime
     from user.models import User
 
 

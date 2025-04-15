@@ -451,6 +451,22 @@ reference = "main"
 resolved_reference = "e1b6b5439fee10feaf34c5bd47261dfe82de41bd"
 
 [[package]]
+name = "django-cors-headers"
+version = "4.7.0"
+description = "django-cors-headers is a Django application for handling the server headers required for Cross-Origin Resource Sharing (CORS)."
+optional = false
+python-versions = ">=3.9"
+groups = ["main"]
+files = [
+    {file = "django_cors_headers-4.7.0-py3-none-any.whl", hash = "sha256:f1c125dcd58479fe7a67fe2499c16ee38b81b397463cf025f0e2c42937421070"},
+    {file = "django_cors_headers-4.7.0.tar.gz", hash = "sha256:6fdf31bf9c6d6448ba09ef57157db2268d515d94fc5c89a0a1028e1fc03ee52b"},
+]
+
+[package.dependencies]
+asgiref = ">=3.6"
+django = ">=4.2"
+
+[[package]]
 name = "django-stubs"
 version = "5.1.3"
 description = "Mypy stubs for Django"
@@ -1448,4 +1464,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.13,<4.0"
-content-hash = "fa2eae5af15eb639bf1ada73280188d8169e1fd2be172204921daffb6cec4ebb"
+content-hash = "94d6490d034dbe093acd30f68f07db06e39a137554463c8be0dea63d7c545baf"
