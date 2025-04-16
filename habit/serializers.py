@@ -46,8 +46,9 @@ class HabitSerializer(serializers.ModelSerializer):
     class Meta:
         model = Habit
         fields = "__all__"
-        validators = [
+        validators = (
             RewardOrRelatedValidator(),  # Исключает одновременное указание вознаграждения и связанной привычки
             PleasantRestrictionsValidator(),  # Исключает появление у приятной привычки вознаграждения
             # или связанной привычки
-        ]
+        )
+        read_only_fields = ("user",)

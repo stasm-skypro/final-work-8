@@ -50,19 +50,19 @@ class HabitViewSetTestCase(TestCase):
     # Везде, где вызывается .data, добавляем аннотацию: Response, чтобы mypy понимал, что
     # response — это rest_framework.response.Response
     def test_list_user_habits(self):
-        url = reverse("habit-list")
+        url = reverse("habit:habit-list")
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["results"][0]["id"], self.habit.id)
 
     def test_create_habit(self):
-        url = reverse("habit-list")
+        url = reverse("habit:habit-list")
         data = {
             "place": "Gym",
             "time": "06:30:00",
             "action": "Workout",
             "periodicity": 2,
-            "duration": "00:45:00",
+            "duration": "00:02:00",
             "reward": "Smoothie",
             "is_public": True,
         }
@@ -71,19 +71,19 @@ class HabitViewSetTestCase(TestCase):
         self.assertTrue(Habit.objects.filter(action="Workout", user=self.user).exists())
 
     def test_retrieve_habit(self):
-        url = reverse("habit-detail", args=[self.habit.id])
+        url = reverse("habit:habit-detail", args=[self.habit.id])
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["id"], self.habit.id)
 
     def test_update_habit(self):
-        url = reverse("habit-detail", args=[self.habit.id])
+        url = reverse("habit:habit-detail", args=[self.habit.id])
         data = {
             "place": "Office",
             "time": "09:00:00",
             "action": "Meditation",
             "periodicity": 1,
-            "duration": "00:15:00",
+            "duration": "00:01:00",
             "reward": "Tea",
             "is_public": False,
         }
@@ -93,14 +93,14 @@ class HabitViewSetTestCase(TestCase):
         self.assertEqual(self.habit.action, "Meditation")
 
     def test_partial_update_habit(self):
-        url = reverse("habit-detail", args=[self.habit.id])
+        url = reverse("habit:habit-detail", args=[self.habit.id])
         response: Response = self.client.patch(url, {"action": "Read book"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.habit.refresh_from_db()
         self.assertEqual(self.habit.action, "Read book")
 
     def test_delete_habit(self):
-        url = reverse("habit-detail", args=[self.habit.id])
+        url = reverse("habit:habit-detail", args=[self.habit.id])
         response: Response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Habit.objects.filter(id=self.habit.id).exists())
@@ -114,12 +114,12 @@ class HabitViewSetTestCase(TestCase):
             periodicity=1,
             duration=timedelta(minutes=15),
         )
-        url = reverse("habit-detail", args=[other_habit.id])
+        url = reverse("habit:habit-detail", args=[other_habit.id])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_public_habit_list(self):
-        url = reverse("habit-public")
+        url = reverse("habit:habit-public")
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertTrue(any(h["id"] == self.public_habit.id for h in response.data["results"]))
