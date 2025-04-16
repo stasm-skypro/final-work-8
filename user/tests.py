@@ -8,8 +8,8 @@ from user.models import User
 
 class UserTests(APITestCase):
     def setUp(self):
-        self.registration_url = reverse("user:register")  # убедись, что имя url задан
-        self.login_url = reverse("user:login")  # и тут тоже
+        self.registration_url = reverse("user:register")
+        self.login_url = reverse("user:login")
         self.user_data = {
             "email": "test@example.com",
             "first_name": "Test",
@@ -23,23 +23,39 @@ class UserTests(APITestCase):
         self.assertTrue(User.objects.filter(email=self.user_data["email"]).exists())
 
     def test_user_login_with_valid_credentials(self):
-        User.objects.create_user(**self.user_data)
+        # User.objects.create_user(**self.user_data)
+        User.objects.create_user(
+            email=self.user_data["email"],
+            first_name=self.user_data["first_name"],
+            last_name=self.user_data["last_name"],
+            password=self.user_data["password"],  # Менеджер сам вызывает set_password()
+        )
         login_data = {
             "email": self.user_data["email"],
             "password": self.user_data["password"],
         }
         response = self.client.post(self.login_url, login_data)
+        print("response.data:", response.data)
+        print("response.status_code:", response.status_code)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertIn("access", response.data)
         self.assertIn("refresh", response.data)
 
     def test_user_login_with_invalid_credentials(self):
-        User.objects.create_user(**self.user_data)
+        # User.objects.create_user(**self.user_data)
+        User.objects.create_user(
+            email=self.user_data["email"],
+            first_name=self.user_data["first_name"],
+            last_name=self.user_data["last_name"],
+            password=self.user_data["password"],  # Менеджер сам вызывает set_password()
+        )
         login_data = {
             "email": self.user_data["email"],
             "password": "WrongPassword",
         }
         response = self.client.post(self.login_url, login_data)
+        print("response.data:", response.data)
+        print("response.status_code:", response.status_code)
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
         self.assertEqual(response.data["detail"], "Неверный email или пароль.")
 
