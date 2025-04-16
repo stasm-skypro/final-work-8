@@ -80,6 +80,8 @@ class User(AbstractBaseUser, PermissionsMixin):
         "last_name",
     ]  # поля, требуемые при создании пользователя (кроме email и пароля)
 
+    id: int  # Для mypy
+
     def __str__(self):
         """
         Возвращает строковое представление пользователя.

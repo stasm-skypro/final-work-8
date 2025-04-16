@@ -119,6 +119,9 @@ class PleasantHabit(models.Model):
     # Дата создания полезной привычки
     created_at: models.DateTimeField = models.DateTimeField(auto_now_add=True, verbose_name="Создана")
 
+    id: int  # Для mypy
+
+    # Возвращает строковое представление приятной привычки
     def __str__(self) -> str:
         """
         Возвращает строковое представление приятной привычки
