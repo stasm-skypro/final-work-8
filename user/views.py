@@ -18,7 +18,7 @@ class RegisterAPIView(CreateAPIView):
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
-    def post(self, request):
+    def post(self, request, *args, **kwargs):
         """
         Обрабатывает запрос на регистрацию нового пользователя.
         :param request: Объект запроса, содержащий данные пользователя.
