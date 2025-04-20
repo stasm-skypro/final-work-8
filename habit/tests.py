@@ -12,8 +12,15 @@ from user.models import User
 
 
 class HabitViewSetTestCase(TestCase):
+    """
+    Класс для тестирования представления HabitViewSet.
+    """
 
     def setUp(self):
+        """
+        Настраивает тестовые данные.
+        :return:
+        """
         self.user = User.objects.create_user(
             email="testuser@example.com", first_name="Test", last_name="User", password="pass1234"
         )
@@ -50,12 +57,20 @@ class HabitViewSetTestCase(TestCase):
     # Везде, где вызывается .data, добавляем аннотацию: Response, чтобы mypy понимал, что
     # response — это rest_framework.response.Response
     def test_list_user_habits(self):
+        """
+        Тестирует получение списка пользовательских привычек.
+        :return:
+        """
         url = reverse("habit:habit-list")
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["results"][0]["id"], self.habit.id)
 
     def test_create_habit(self):
+        """
+        Тестирует создание привычки.
+        :return:
+        """
         url = reverse("habit:habit-list")
         data = {
             "place": "Gym",
@@ -71,12 +86,20 @@ class HabitViewSetTestCase(TestCase):
         self.assertTrue(Habit.objects.filter(action="Workout", user=self.user).exists())
 
     def test_retrieve_habit(self):
+        """
+        Тестирует получение конкретной привычки.
+        :return:
+        """
         url = reverse("habit:habit-detail", args=[self.habit.id])
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.data["id"], self.habit.id)
 
     def test_update_habit(self):
+        """
+        Тестирует обновление привычки.
+        :return:
+        """
         url = reverse("habit:habit-detail", args=[self.habit.id])
         data = {
             "place": "Office",
@@ -93,6 +116,10 @@ class HabitViewSetTestCase(TestCase):
         self.assertEqual(self.habit.action, "Meditation")
 
     def test_partial_update_habit(self):
+        """
+        Тестирует частичное обновление привычки.
+        :return:
+        """
         url = reverse("habit:habit-detail", args=[self.habit.id])
         response: Response = self.client.patch(url, {"action": "Read book"})
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -100,12 +127,20 @@ class HabitViewSetTestCase(TestCase):
         self.assertEqual(self.habit.action, "Read book")
 
     def test_delete_habit(self):
+        """
+        Тестирует удаление привычки.
+        :return:
+        """
         url = reverse("habit:habit-detail", args=[self.habit.id])
         response: Response = self.client.delete(url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         self.assertFalse(Habit.objects.filter(id=self.habit.id).exists())
 
     def test_user_cannot_access_others_habit(self):
+        """
+        Тестирует, что пользователь не может получить доступ к привычке другого пользователя.
+        :return:
+        """
         other_habit = Habit.objects.create(
             user=self.other_user,
             place="Cafe",
@@ -119,6 +154,10 @@ class HabitViewSetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
 
     def test_public_habit_list(self):
+        """
+        Тестирует получение списка публичных привычек.
+        :return:
+        """
         url = reverse("habit:habit-public")
         response: Response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
